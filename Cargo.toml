@@ -1,0 +1,19 @@
+[package]
+name = "Ether"
+version = "0.1.0"
+authors = ["yuyongpeng <yuyongpeng@hotmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rustc-hex = "2.1.0"
+unicode-segmentation = "1.6.0"
+tiny-keccak = { version = "2.0", features = ["keccak"] }
+ethereum-tx-sign = "3.0.3"
+ethereum-types = "0.9"
+hex = "0.4.2"
+bytes = { version = "0.5", features = ["serde"] }
+env_logger = "0.7.0"
+tokio = { version = "0.2", features = ["full"] }
+web3 = { git = "https://github.com/tomusdrw/rust-web3.git", branch = "master" }
