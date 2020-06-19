@@ -6,7 +6,8 @@ extern crate hex;
 extern crate ethereum_types;
 extern crate ethkey;
 extern crate eth_checksum;
-
+extern crate ether_lib;
+extern crate tokio_test;
 
 mod cmd;
 mod utils;
@@ -20,7 +21,6 @@ ether --abi ./abi.json listenEvent --contract 0xXXXX --name funcName # 需要解
 ether --abi ./abi.json call --contract 0xXXXX --func funcName --args arg1 arg2 arg3 ...
 ether --abi ./abi.json query --contract 0xXXXX --func funcName --args arg1 arg2 arg3 ...
 */
-
 #[tokio::main]
 async fn main() {
     env_logger::init();
@@ -30,3 +30,6 @@ async fn main() {
 
     // ethereum::private_to_address(&String::from("941b9e919770751c4b0561ea39526c087d10925fd9815073059c63f963740f6c"));
 }
+
+
+

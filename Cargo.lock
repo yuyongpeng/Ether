@@ -507,6 +507,7 @@ dependencies = [
  "bytes",
  "env_logger 0.7.1",
  "eth_checksum",
+ "ether_lib",
  "ethereum-tx-sign",
  "ethereum-types",
  "ethkey",
@@ -516,7 +517,23 @@ dependencies = [
  "structopt",
  "tiny-keccak 2.0.2",
  "tokio",
+ "tokio-test",
  "unicode-segmentation",
+ "web3",
+]
+
+[[package]]
+name = "ether_lib"
+version = "0.1.0"
+dependencies = [
+ "env_logger 0.7.1",
+ "eth_checksum",
+ "ethereum-tx-sign",
+ "ethereum-types",
+ "ethkey",
+ "hex",
+ "log",
+ "tiny-keccak 2.0.2",
  "web3",
 ]
 
@@ -2267,6 +2284,17 @@ dependencies = [
  "proc-macro2 1.0.18",
  "quote 1.0.7",
  "syn 1.0.31",
+]
+
+[[package]]
+name = "tokio-test"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed0049c119b6d505c4447f5c64873636c7af6c75ab0d45fd9f618d82acb8016d"
+dependencies = [
+ "bytes",
+ "futures-core",
+ "tokio",
 ]
 
 [[package]]

@@ -6,6 +6,7 @@ use web3;
 use web3::types::U256;
 use web3::types::Bytes;
 use ethereum_tx_sign::RawTransaction;
+use ether_lib;
 
 use crate::utils;
 use crate::ethereum;
@@ -135,43 +136,18 @@ impl Func {
 impl SendEth {
     /// 发送ETH
     async fn send(&self, host_url: &String, gas_limit: usize, gas_price: usize) {
-        // 获得私钥和address对应的H160
-        let from_h160 = ethereum::private_to_h160(&self.from);
-        let to_h160 = ethereum::address_to_h160(&self.to);
-
-        let web3 = ethereum::get_web3_http(host_url);
-        let nonce = web3.eth().transaction_count(from_h160, None).await.unwrap();
-        let tx = RawTransaction {
-            nonce: utils::convert_u256(nonce),
-            to: Some(to_h160.clone()),
-            value: ethereum_types::U256::from_dec_str(&self.value).unwrap(),
-            gas_price: ethereum_types::U256::from_dec_str(&gas_price.to_string()).unwrap(),
-            gas: ethereum_types::U256::from_dec_str(&gas_limit.to_string()).unwrap(),
-            data: Vec::new(),
-        };
-
-        let signed_tx = tx.sign(&utils::get_private_key(&self.from), &CHAIN_ID);
-
-        let from_balance_before = web3.eth().balance(from_h160.clone(), None).await.unwrap();
-        let to_balance_before = web3.eth().balance(to_h160.clone(), None).await.unwrap();
-        let tx_hash = web3.eth().send_raw_transaction(Bytes::from(signed_tx)).await.unwrap();
-        let from_balance_after = web3.eth().balance(from_h160.clone(), None).await.unwrap();
-        let to_balance_after = web3.eth().balance(to_h160.clone(), None).await.unwrap();
-
-        debug!("send ETH TX Hash: {:?}", tx_hash);
-        println!("from Balance before: {}", from_balance_before);
-        println!("to Balance before: {}", to_balance_before);
-        println!("from Balance after: {}", from_balance_after);
-        println!("to Balance after: {}", to_balance_after);
+        ethereum::send_eth(host_url, &self.from, &self.to, gas_limit, gas_price, &self.value).await;
     }
 }
 
 impl Balance {
     async fn balance_of(&self, host_url: &String) -> std::result::Result<U256, web3::Error> {
-        let web3 = ethereum::get_web3_http(host_url);
-        let account = utils::address_to_H160(&self.account);
-        let balance = web3.eth().balance(account, None).await?;
-        debug!("Balance of {:?}: {}", account, balance);
-        return Ok(balance);
+        return ethereum::balance_of(host_url, &self.account).await;
+        // let web3 = ethereum::get_web3_http(host_url);
+        // // let account = utils::address_to_H160(&self.account);
+        // let account = ether_lib::address_to_h160(&self.account);
+        // let balance = web3.eth().balance(account, None).await?;
+        // debug!("Balance of {:?}: {}", account, balance);
+        // return Ok(balance);
     }
 }

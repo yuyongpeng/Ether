@@ -24,6 +24,8 @@ web3 = { git = "https://github.com/tomusdrw/rust-web3.git", branch = "master" }
 #libsecp256k1 = "0.3.5"
 ethkey = "0.3"
 eth_checksum = "0.1.1"
+ether_lib = { path = "./ether_lib" }
+tokio-test = "0.2.1"
 
 #[profile.dev]       	# 使用 cargo build 会走这个选项
 #opt-level = 0		# 设置优化级别
